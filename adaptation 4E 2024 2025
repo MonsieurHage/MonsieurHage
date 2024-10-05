@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptations pédagogiques</title>
+    <style>
+        /* Styles pour organiser les frames */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        #left-frame {
+            width: 30%;
+            padding: 10px;
+            border-right: 2px solid #ccc;
+        }
+        #right-frame {
+            width: 70%;
+            padding: 10px;
+        }
+        .student {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .student:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+        /* Style de surbrillance pour l'élève sélectionné */
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Liste des adaptations pédagogiques numérotées
+        const adaptations = {
+             1: `<img src="icons/icon_parrainage.png" alt="Parrainage" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Parrainage`,
+		2: `<img src="icons/icon_1er_rang.png" alt="Placer au 1er rang" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Placer au 1er rang`,
+		3: `<img src="icons/icon_binome.png" alt="Placer à côté d’un binôme moteur" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Placer à côté d’un binôme moteur`,
+		4: `<img src="icons/icon_tutorat.png" alt="Mettre en place un tutorat" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Mettre en place un tutorat`,
+		5: `<img src="icons/icon_recentrer.png" alt="Recentrer sur la tâche à réaliser" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Recentrer sur la tâche à réaliser`,
+		6: `<img src="icons/icon_ipad.png" alt="Autoriser l’utilisation d’une règle scan" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser l’utilisation d’une règle scan ou de l’appareil photo de l’iPad`,
+		7: `<img src="icons/icon_polices.png" alt="Utiliser des polices adaptées" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Utiliser des polices adaptées`,
+		8: `<img src="icons/icon_supports_agrandis.png" alt="Agrandir les supports écrits" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Agrandir les supports écrits`,
+		9: `<img src="icons/icon_devoirs_informatises.png" alt="Autoriser les devoirs informatisés" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser les devoirs informatisés`,
+		10: `<img src="icons/icon_pas_de_sanction.png" alt="Ne pas sanctionner les oublis de matériel" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Ne pas sanctionner les oublis de matériel`,
+		11: `<img src="icons/icon_temps.png" alt="Mettre en œuvre un ⅓ temps ou réduire le nombre d’exercices" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Mettre en œuvre un ⅓ temps ou réduire le nombre d’exercices`,
+		12: `<img src="icons/icon_dictee.png" alt="Autoriser les dictées aménagées" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser les dictées aménagées`,
+		13: `<img src="icons/icon_pas_de_sanction_orthographe.png" alt="Ne pas sanctionner l’orthographe en dehors de la matière" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Ne pas sanctionner l’orthographe en dehors de la matière`,
+		14: `<img src="icons/icon_calculatrice.png" alt="Autoriser l’utilisation d’une calculatrice simple" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser l’utilisation d’une calculatrice simple ou des tables`,
+		15: `<img src="icons/icon_memos.png" alt="Autoriser la réalisation et l’utilisation de mémos" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser la réalisation et l’utilisation de mémos`,
+		16: `<img src="icons/icon_oraliser.png" alt="Oraliser les consignes" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Oraliser les consignes`,
+		17: `<img src="icons/icon_reformuler.png" alt="Reformuler les consignes" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Reformuler les consignes et le vocabulaire spécifique`,
+		18: `<img src="icons/icon_limite_redaction.png" alt="Limiter la rédaction des réponses" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Limiter la rédaction des réponses`,
+		19: `<img src="icons/icon_eval_orale.png" alt="Privilégier les évaluations orales" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Privilégier les évaluations orales (LV)`,
+		20: `<img src="icons/icon_support_visuel.png" alt="Proposer des supports visuels" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Proposer des supports visuels`,
+		21: `<img src="icons/icon_eval_fond.png" alt="Évaluer le fond plutôt que la forme" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Évaluer le fond plutôt que la forme (langue française, constructions graphiques)`,
+		22: `<img src="icons/icon_boire.png" alt="Autoriser l’élève à boire" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser l’élève à boire`,
+		23: `<img src="icons/icon_sortir_classe.png" alt="Autoriser l’élève à sortir de la classe" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser l’élève à sortir de la classe`,
+		24: `<img src="icons/icon_toilettes.png" alt="Autoriser l’élève à se rendre aux toilettes" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Autoriser l’élève à se rendre aux toilettes`,
+		25: `<img src="icons/icon_trousse_soins.png" alt="Prendre la trousse de soins" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> Prendre la trousse de soins lors des sorties scolaires`,
+		26: `<img src="icons/icon_comprehension.png" alt="S’assurer de la bonne compréhension des consignes" style="width:50px;height:50px;vertical-align:middle;margin-right:5px;"> S’assurer de la bonne compréhension des consignes`
+};
+
+        // Liste des difficultés numérotées
+        const difficultiesList = {
+		    0: "Indéterninée(s)",
+            1: "Accès à l’écrit",
+            2: "Geste graphique",
+            3: "Coordination",
+            4: "Attention et concentration",
+            5: "Raisonnement mathématique",
+            6: "Interactions sociales",
+            7: "Malvoyant / malentendant",
+            8: "Manque de confiance en soi",
+			9: "Troubles de la compréhension orale (TSLE-aCO)",
+			10: "Lenteur / fatigabilité",
+			11: "Dyslexie",
+			12: "Dysphasie",
+			13: "Hypersensibilité"
+        };
+
+        // Fonction pour afficher les adaptations et les difficultés
+        function showAdaptation(numbers, difficultyNumbers, element) {
+            const adaptationTexts = numbers.map(num => adaptations[num]);
+            const difficultyTexts = difficultyNumbers.map(num => difficultiesList[num]);
+            
+            // Mise à jour du cadre de droite avec les difficultés et les adaptations
+            document.getElementById("right-frame").innerHTML = `
+                <p><strong>Difficulté(s) repérée(s) :</strong> ${difficultyTexts.join(", ")}</p>
+                <hr>
+                <p><strong>Adaptation(s) :</strong></p>
+                <p>${adaptationTexts.join("<br>")}</p>
+            `;
+
+            // Retirer la surbrillance précédente
+            const students = document.querySelectorAll('.student');
+            students.forEach(student => student.classList.remove('highlight'));
+
+            // Ajouter la surbrillance à l'élève sélectionné
+            element.classList.add('highlight');
+        }
+    </script>
+</head>
+<body>
+    <!-- Frame de gauche avec la liste des élèves -->
+    <div id="left-frame">
+        <h2>Liste des élèves 4E 2024 2025</h2>
+        <p class="student" onmouseover="showAdaptation([6], [0], this)">AYNA Timur</p>
+        <p class="student" onmouseover="showAdaptation([6,9,11,23], [1,2, 10], this)">DEMANY Clémence</p>
+        <p class="student" onmouseover="showAdaptation([6,11,23], [0], this)">DRIOUCH Salma</p>
+        <p class="student" onmouseover="showAdaptation([6], [0], this)">LAMBERT Ines</p>
+        <p class="student" onmouseover="showAdaptation([6], [0], this)">OUSAHLA Feriel</p>
+        <p class="student" onmouseover="showAdaptation([6, 8, 10, 16, 18, 21, 26], [2,3,5,8,11], this)">PANNECOUKE RINGOT Océane</p>
+        <p class="student" onmouseover="showAdaptation([6, 9, 10, 13, 14, 16, 21, 26], [4,6,12,13], this)">PICARD BARLERIN Evan</p>
+        <p class="student" onmouseover="showAdaptation([6], [0], this)">ROUAZI Sarah</p>
+        <p class="student" onmouseover="showAdaptation([5,6,7,8,9,11,12,13,17,18,20,23], [1,4], this)">SAID Fares</p>
+        <p class="student" onmouseover="showAdaptation([9, 11, 12, 13,16,17,23], [9], this)">NEMICHE Silvio</p>
+        <p class="student" onmouseover="showAdaptation([6], [0], this)">SOGLO Paris</p>
+    </div>
+
+    <!-- Frame de droite où apparaissent les adaptations pédagogiques -->
+    <div id="right-frame">
+        <h2>Adaptations pédagogiques</h2>
+        <p>Passez la souris sur un nom pour voir les détails.</p>
+    </div>
+</body>
+</html>
